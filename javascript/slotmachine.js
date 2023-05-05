@@ -4,7 +4,7 @@
 // play the game
 // check for wins
 // return output and/or winning
-// check if repeatable
+// check if repeatable and ask for new gameplay
 
 const prompt = require("prompt-sync")();
 
