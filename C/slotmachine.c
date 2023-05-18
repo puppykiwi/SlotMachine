@@ -2,6 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
+#include "mwendwa.h"
+
+#define size 100
+char symbols[4] = {'#','@','$','%'};
+int symbolsValue[] = {2,4,6,8};
+char* slotResult;
+
 
 
 // deposit money
@@ -52,16 +60,37 @@ int getBet(int amount,int lines){
 }
 
 // play the game
+char* slot(char symbols[], char* slotResult){
+    srand(time(NULL));
+    slotResult = malloc(size * sizeof(char));
+    
+    for(int i=0; i<3; i++){
+        for (int j=0; j<3; j++){
+            int index = rand() % 4;
+            append(slotResult, '|');
+            append(slotResult, ' ');
+            append(slotResult, symbols[index]);
+            //I could make the header file do these lines but a good programmer is a lazy programmer :)
+            append(slotResult, ' ');
+            append(slotResult, '|');
+            append(slotResult, ' ');
+        }
+        append(slotResult, '\n');
+    }
+return (slotResult);
+}
+
 // check for wins
 // return output and/or winning
 // check if repeatable and ask for new gameplay
 
 int main(void)
 {
-    int amount = getDeposit();
-    int lines = getLines();
-    int bet = getBet(amount, lines);
+    //int amount = getDeposit();
+    //int lines = getLines();
+    //int bet = getBet(amount, lines);
 
-    printf("%d - %d - %d\n",amount, lines, bet);
+    printf("%s",slot(symbols, slotResult));
+    //printf("%d - %d - %d\n",amount, lines, bet);
 
 }
