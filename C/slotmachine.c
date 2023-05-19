@@ -9,7 +9,7 @@
 char symbols[4] = {'#','@','$','%'};
 int symbolsValue[] = {2,4,6,8};
 char* slotResult;
-
+char* analREsult;
 
 
 // deposit money
@@ -60,9 +60,11 @@ int getBet(int amount,int lines){
 }
 
 // play the game
-char* slot(char symbols[], char* slotResult){
+char* slot(char symbols[], char* slotResult, char* analREsult){
     srand(time(NULL));
     slotResult = malloc(size * sizeof(char));
+    analREsult = malloc(size * sizeof(char));
+
     
     for(int i=0; i<3; i++){
         for (int j=0; j<3; j++){
@@ -70,6 +72,7 @@ char* slot(char symbols[], char* slotResult){
             append(slotResult, '|');
             append(slotResult, ' ');
             append(slotResult, symbols[index]);
+            append(analREsult, symbols[index]);
             //I could make the header file do these lines but a good programmer is a lazy programmer :)
             append(slotResult, ' ');
             append(slotResult, '|');
@@ -77,20 +80,28 @@ char* slot(char symbols[], char* slotResult){
         }
         append(slotResult, '\n');
     }
+    printf("%s",analREsult);
 return (slotResult);
 }
 
 // check for wins
+int getWinning(char* analREsult,int bet, char symbols[], int symbolsValue[]){
+    int winning = 0;
+    return winning;
+
+}
+
 // return output and/or winning
 // check if repeatable and ask for new gameplay
 
 int main(void)
 {
-    //int amount = getDeposit();
-    //int lines = getLines();
-    //int bet = getBet(amount, lines);
-
-    printf("%s",slot(symbols, slotResult));
-    //printf("%d - %d - %d\n",amount, lines, bet);
+    int amount = getDeposit();
+    int lines = getLines();
+    int bet = getBet(amount, lines);
+    char* result = slot(symbols, slotResult, analREsult);
+    
+    printf("%s",result);
+    printf("%d - %d - %d\n",amount, lines, bet);
 
 }
