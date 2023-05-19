@@ -3,13 +3,15 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <unistd.h>
 #include "mwendwa.h"
 
 #define size 100
-char symbols[4] = {'#','@','$','%'};
+char symbols[4] = {'#','@','$','!'};
 int symbolsValue[] = {2,4,6,8};
 char* slotResult;
-char* analREsult;
+char* analResult;
+
 
 
 // deposit money
@@ -60,10 +62,9 @@ int getBet(int amount,int lines){
 }
 
 // play the game
-char* slot(char symbols[], char* slotResult, char* analREsult){
+char* slot(char symbols[], char* slotResult){
     srand(time(NULL));
     slotResult = malloc(size * sizeof(char));
-    analREsult = malloc(size * sizeof(char));
 
     
     for(int i=0; i<3; i++){
@@ -72,7 +73,6 @@ char* slot(char symbols[], char* slotResult, char* analREsult){
             append(slotResult, '|');
             append(slotResult, ' ');
             append(slotResult, symbols[index]);
-            append(analREsult, symbols[index]);
             //I could make the header file do these lines but a good programmer is a lazy programmer :)
             append(slotResult, ' ');
             append(slotResult, '|');
@@ -80,13 +80,34 @@ char* slot(char symbols[], char* slotResult, char* analREsult){
         }
         append(slotResult, '\n');
     }
-    printf("%s",analREsult);
 return (slotResult);
 }
 
+// analyze the result
+char* analSlot(char symbols[], char* analResult){
+    srand(time(NULL));
+    analResult = malloc(size * sizeof(char));
+
+    
+    for(int i=0; i<3; i++){
+        for (int j=0; j<3; j++){
+            int index = rand() % 4;
+            append(analResult, symbols[index]);
+        }
+    }
+return (analResult);
+}
 // check for wins
-int getWinning(char* analREsult,int bet, char symbols[], int symbolsValue[]){
+int getWinning(char* analResult,int bet, char symbols[], int symbolsValue[]){
     int winning = 0;
+    char win = analyze(analResult);
+    //printf("%c, %s\n",win, analResult); //for testing purposes, remove this
+
+    for (int i=0; i<4; i++){
+        if (win == symbols[i]){
+            winning = bet * symbolsValue[i];
+        }
+    }
     return winning;
 
 }
@@ -97,11 +118,45 @@ int getWinning(char* analREsult,int bet, char symbols[], int symbolsValue[]){
 int main(void)
 {
     int amount = getDeposit();
-    int lines = getLines();
-    int bet = getBet(amount, lines);
-    char* result = slot(symbols, slotResult, analREsult);
-    
-    printf("%s",result);
-    printf("%d - %d - %d\n",amount, lines, bet);
+    while (1){
+        
+        int lines = getLines();
+        int bet = getBet(amount, lines);
+        int betAmount = bet * lines;
 
+        printf("You bet %d on %d line(s).\nYour total bet amount is %d shillings\n", bet, lines, betAmount);
+        char* result = slot(symbols, slotResult);
+        char* analREsult = analSlot(symbols, analResult);
+
+        int win = getWinning(analREsult, betAmount, symbols, symbolsValue);
+        
+        sleep(2);
+        printf("\n%s\n",result);
+        //printf("%d - %d - %d\n",amount, lines, bet); //for testing purposes, remove this
+        //printf("%s\n", analResult); //for testing purposes, remove this
+        //printf("%d",win); //for testing purposes, remove this
+
+        if (win == 0){
+            printf("You lost %d shillings\n", betAmount);
+            amount = amount - betAmount;
+        }
+        else{
+            printf("You won %d shillings!\n", win);
+            amount = amount + win;
+        }
+        printf("Your new balance is %d shillings\n\n", amount);
+        if (amount == 0){printf("You ran out of money!\nGerarra here brokie \n");break;}
+
+        char playAgain;
+        printf("Do you want to play again? (y/n): ");
+        scanf(" %c", &playAgain);
+        printf("\n");
+        if (tolower(playAgain) == 'y'){
+            continue;
+        }
+        else{
+            printf("Thank you for playing.\n");
+            break;
+        }
+    }
 }

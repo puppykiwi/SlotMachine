@@ -16,12 +16,12 @@ void append(char* str, char c) {
 char analyze (char* result){
     int length = strlen(result);
 
-    for (int i=0; i<length; i = i + 2){
+    for (int i=0; i<length; i = i + 3){
         if (result[i] == result[i+1] && result[i+1] == result[i+2]){
-            printf("%c - %c - %c\n",result[i],result[i+1],result[i+2]);
+            //printf("%c - %c - %c\n",result[i],result[i+1],result[i+2]); //for debugging
             return result[i];
-        }
-        else{return '0';}   
+        } 
     }
+    return '0';
 }
 #endif
