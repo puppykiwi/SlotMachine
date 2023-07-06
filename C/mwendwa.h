@@ -4,8 +4,12 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <time.h>
+#include <unistd.h>
 
-//func to append a charcater to string a string because... C
+
+//func to append a charcater to a string because... C
 void append(char* str, char c) {
     int i = 0;
     while (str[i] != '\0') {i++;}
