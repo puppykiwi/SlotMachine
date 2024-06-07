@@ -11,11 +11,16 @@ func main(){
 		
 		// fmt.Println("Your current game balnce is:", balance," shillings")
 		fmt.Println("Press {ENTER} to continue  or {Q} to quit the game")
-		value,err := fmt.Scan()
+		value,err := fmt.Scanln()
+		value = string(value)
 		
 		if err != nil{
-			fmt.Println("error")
+			fmt.Println("Error found; ")
+			continue
 		}
-		fmt.Println(value)
+		
+		if value[0] == "\n"{
+			fmt.Println("Continuing game")
+		}
 	}
 }
