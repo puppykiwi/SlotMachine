@@ -1,6 +1,7 @@
 package main
 
 import "fmt"
+import "reflect"
 
 func main(){
 	
@@ -33,8 +34,11 @@ func getDeposit(running bool ) int {
 	for running{
 		fmt.Println("How much would you like to deposit: ")
 		fmt.Scanln(&amount)
-		if amount < 1{
-			fmt.Println("Your deposit must be greater than 0")
+		if reflect.TypeOf(amount) == "int"{
+			if amount < 1{
+				fmt.Println("Your deposit must be greater than 0")
+			}
+			fmt.Println("Enter a valid number")
 		}
 
 	}
