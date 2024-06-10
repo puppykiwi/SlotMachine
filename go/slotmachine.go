@@ -35,10 +35,12 @@ func getDeposit(running bool ) int {
 		fmt.Println("How much would you like to deposit: ")
 		fmt.Scanln(&amount)
 		if reflect.TypeOf(amount) == "int"{
-			if amount < 1{
-				fmt.Println("Your deposit must be greater than 0")
+			if amount > 1{
+				break
+				} else {
+					fmt.Println("Your deposit must be greater than 0")
 			}
-			fmt.Println("Enter a valid number")
+			} else { fmt.Println("Enter a valid number")
 		}
 
 	}
