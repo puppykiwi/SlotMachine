@@ -18,9 +18,10 @@ func main(){
 			continue
 		}
 		
-		if string(value[0]) == "Q"{
+		if string(value[0]) == "Q" || string(value[0]) == "q"{
 			fmt.Println("Quiting game")
-			running = false
+			break
+			// running = false
 		}
 		fmt.Println("now")
 	}
