@@ -139,7 +139,7 @@ def main():
     balance = deposit()
     while True:
         print("Current balance is {} shillings".format(balance))
-        answer = input("Press Enter to play (q to quit)")
+        answer = input("Press Enter to play (q to quit) : ")
         if answer == 'q':
             break
         balance += game(balance)
