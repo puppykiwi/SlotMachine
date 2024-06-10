@@ -30,11 +30,11 @@ func main(){
 
 func getDeposit(running bool ) int {
 	
-	amount := 0
+	var amount int
 	for running{
 		fmt.Println("How much would you like to deposit: ")
 		fmt.Scanln(&amount)
-		if reflect.TypeOf(amount) == "int"{
+		if reflect.TypeOf(amount).Name() == "int"{
 			if amount > 1{
 				break
 				} else {
